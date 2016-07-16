@@ -1,5 +1,5 @@
 name: AdminMode
-main: io.github.Thomdare.Main
+main: io.github.thomdare.Main
 version: 0.1
 author: Thomdare
 commands:

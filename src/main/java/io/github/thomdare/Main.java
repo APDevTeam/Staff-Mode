@@ -20,14 +20,14 @@ public class Main extends JavaPlugin {
 	private List<String> inAdmin = new ArrayList<String>();
 	private HashMap<String, Location> StaffLocations = new HashMap<String, Location>();
 
-	public void onEnbale() {
+	public void onEnable() {
 		// We need these
 		getConfig().addDefault("permissions.adminmode.onEnable", adminmodeenable);
 		getConfig().addDefault("permissions.modmode.onEnable", modmodeenable);
 		getConfig().addDefault("permissions.adminmode.onDisable", adminmodedisable);
 		getConfig().addDefault("permissions.modmode.onDisable", modmodedisable);
 		getConfig().options().copyDefaults(true);
-		this.saveConfig();
+		saveConfig();
 		// Lets get those already there
 		adminmodeenable = getConfig().getStringList("permissions.adminmode.onEnable");
 		modmodeenable = getConfig().getStringList("permissions.modmode.onEnable");
@@ -50,6 +50,7 @@ public class Main extends JavaPlugin {
 								StaffLocations.remove(player.getName());
 							}
 						}
+						return true;
 					} else {
 						for (String command : modmodeenable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
@@ -57,6 +58,7 @@ public class Main extends JavaPlugin {
 							StaffLocations.put(player.getName(), player.getLocation());
 
 						}
+						return true;
 					}
 				}
 			} else if (cmd.getName().equalsIgnoreCase("adminmode")) {
@@ -69,13 +71,16 @@ public class Main extends JavaPlugin {
 								player.teleport(StaffLocations.get(player.getName()));
 								StaffLocations.remove(player.getName());
 							}
+							
 						}
+						return true;
 					} else {
 						for (String command : adminmodeenable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
 							inAdmin.add(player.getName());
 							StaffLocations.put(player.getName(), player.getLocation());
 						}
+						return true;
 					}
 
 				} else {
