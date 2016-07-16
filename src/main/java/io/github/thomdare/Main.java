@@ -22,17 +22,17 @@ public class Main extends JavaPlugin {
 
 	public void onEnable() {
 		// We need these
-		getConfig().addDefault("permissions.adminmode.onEnable", adminmodeenable);
-		getConfig().addDefault("permissions.modmode.onEnable", modmodeenable);
-		getConfig().addDefault("permissions.adminmode.onDisable", adminmodedisable);
-		getConfig().addDefault("permissions.modmode.onDisable", modmodedisable);
+		getConfig().addDefault("permissions.adminmode.onenable", adminmodeenable);
+		getConfig().addDefault("permissions.modmode.onenable", modmodeenable);
+		getConfig().addDefault("permissions.adminmode.ondisable", adminmodedisable);
+		getConfig().addDefault("permissions.modmode.ondisable", modmodedisable);
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		// Lets get those already there
-		adminmodeenable = getConfig().getStringList("permissions.adminmode.onEnable");
-		modmodeenable = getConfig().getStringList("permissions.modmode.onEnable");
-		adminmodedisable = getConfig().getStringList("permissions.adminmode.onDisable");
-		modmodedisable = getConfig().getStringList("permissions.modmode.onDisable");
+		adminmodeenable = getConfig().getStringList("permissions.adminmode.onenable");
+		modmodeenable = getConfig().getStringList("permissions.modmode.onenable");
+		adminmodedisable = getConfig().getStringList("permissions.adminmode.ondisable");
+		modmodedisable = getConfig().getStringList("permissions.modmode.ondisable");
 	}
 
 	@Override
@@ -44,20 +44,21 @@ public class Main extends JavaPlugin {
 					if (inMod.contains(player.getName())) {
 						for (String command : modmodedisable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
-							inMod.remove(player.getName());
-							if (StaffLocations.containsKey(player.getName())) {
-								player.teleport(StaffLocations.get(player.getName()));
-								StaffLocations.remove(player.getName());
-							}
+						}
+						inMod.remove(player.getName());
+						if (StaffLocations.containsKey(player.getName())) {
+							player.teleport(StaffLocations.get(player.getName()));
+							StaffLocations.remove(player.getName());
 						}
 						return true;
 					} else {
 						for (String command : modmodeenable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
-							inMod.add(player.getName());
-							StaffLocations.put(player.getName(), player.getLocation());
 
 						}
+						inMod.add(player.getName());
+						StaffLocations.put(player.getName(), player.getLocation());
+						getLogger().info(player.getName() + " entered mod mode");
 						return true;
 					}
 				}
@@ -66,20 +67,22 @@ public class Main extends JavaPlugin {
 					if (inAdmin.contains(player.getName())) {
 						for (String command : adminmodedisable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
-							inAdmin.remove(player.getName());
-							if (StaffLocations.containsKey(player.getName())) {
-								player.teleport(StaffLocations.get(player.getName()));
-								StaffLocations.remove(player.getName());
-							}
-							
+
+						}
+						inAdmin.remove(player.getName());
+						if (StaffLocations.containsKey(player.getName())) {
+							player.teleport(StaffLocations.get(player.getName()));
+							StaffLocations.remove(player.getName());
 						}
 						return true;
 					} else {
 						for (String command : adminmodeenable) {
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
-							inAdmin.add(player.getName());
-							StaffLocations.put(player.getName(), player.getLocation());
+
 						}
+						inAdmin.add(player.getName());
+						StaffLocations.put(player.getName(), player.getLocation());
+						getLogger().info(player.getName() + " entered admin mode");
 						return true;
 					}
 
