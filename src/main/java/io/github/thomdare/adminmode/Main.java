@@ -20,6 +20,7 @@ public class Main extends JavaPlugin {
 	private List<String> inAdmin = new ArrayList<String>();
 	private HashMap<String, Location> StaffLocations = new HashMap<String, Location>();
 
+
 	public void onEnable() {
 		// We need these
 		getConfig().addDefault("permissions.adminmode.onenable", adminmodeenable);
@@ -34,6 +35,7 @@ public class Main extends JavaPlugin {
 		adminmodedisable = getConfig().getStringList("permissions.adminmode.ondisable");
 		modmodedisable = getConfig().getStringList("permissions.modmode.ondisable");
 	}
+
 	public void onDisable() {
 		adminmodeenable.clear();
 		adminmodedisable.clear();
@@ -52,17 +54,18 @@ public class Main extends JavaPlugin {
 				if (player.hasPermission("adminmode.mod")) {
 					if (inMod.contains(player.getName())) {
 						for (String command : modmodedisable) {
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", player.getName()));
 						}
 						inMod.remove(player.getName());
 						if (StaffLocations.containsKey(player.getName())) {
 							player.teleport(StaffLocations.get(player.getName()));
 							StaffLocations.remove(player.getName());
 						}
+						
 						return true;
 					} else {
 						for (String command : modmodeenable) {
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", player.getName()));
 
 						}
 						inMod.add(player.getName());
@@ -75,7 +78,7 @@ public class Main extends JavaPlugin {
 				if (player.hasPermission("adminmode.admin")) {
 					if (inAdmin.contains(player.getName())) {
 						for (String command : adminmodedisable) {
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", player.getName()));
 
 						}
 						inAdmin.remove(player.getName());
@@ -86,7 +89,7 @@ public class Main extends JavaPlugin {
 						return true;
 					} else {
 						for (String command : adminmodeenable) {
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("@p", player.getName()));
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", player.getName()));
 
 						}
 						inAdmin.add(player.getName());
@@ -95,12 +98,14 @@ public class Main extends JavaPlugin {
 						return true;
 					}
 
-				} else {
-					sender.sendMessage("You must be a player!");
-					return false;
 				}
 			}
+		} else {
+
+			sender.sendMessage("You must be a player!");
+			return false;
 		}
+
 		return false;
 	}
 }
