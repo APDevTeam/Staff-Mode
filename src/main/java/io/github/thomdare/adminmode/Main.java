@@ -22,7 +22,8 @@ public class Main extends JavaPlugin {
     private List<String> inAdmin = new ArrayList<String>();
     private HashMap<String, Location> StaffLocations = new HashMap<String, Location>();
     private HashMap<String, ItemStack[]> StaffInventories = new HashMap<String, ItemStack[]>();
-    private HashMap<String, Integer> StaffExp = new HashMap<String, Integer>();
+    private HashMap<String, Integer> StaffLevel = new HashMap<String, Integer>();
+    private HashMap<String, Float> StaffExp = new HashMap<String, Float>();
 
     public void onEnable() {
         // We need these
@@ -60,7 +61,9 @@ public class Main extends JavaPlugin {
                 StaffInventories.remove(name);
             }
             if (StaffExp.containsKey(name)) {
-                player.setTotalExperience(StaffExp.get(name));
+                player.setExp(StaffExp.get(name));
+                player.setLevel(StaffLevel.get(name));
+                StaffLevel.remove(name);
                 StaffExp.remove(name);
             }
             player.updateInventory();
@@ -86,7 +89,9 @@ public class Main extends JavaPlugin {
                 StaffInventories.remove(name);
             }
             if (StaffExp.containsKey(name)) {
-                player.setTotalExperience(StaffExp.get(name));
+                player.setExp(StaffExp.get(name));
+                player.setLevel(StaffLevel.get(name));
+                StaffLevel.remove(name);
                 StaffExp.remove(name);
             }
             player.updateInventory();   
@@ -133,8 +138,10 @@ public class Main extends JavaPlugin {
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
-                    player.setTotalExperience(StaffExp.get(player.getName()));
+                    player.setExp(StaffExp.get(player.getName()));
+                    player.setLevel(StaffLevel.get(player.getName()));
                     StaffExp.remove(player.getName());
+                    StaffLevel.remove(player.getName());
                 }
                 player.updateInventory();
                 return true;
@@ -146,8 +153,10 @@ public class Main extends JavaPlugin {
                 inMod.add(player.getName());
                 StaffLocations.put(player.getName(), player.getLocation());
                 StaffInventories.put(player.getName(), player.getInventory().getContents());
-                StaffExp.put(player.getName(), player.getTotalExperience());
-                player.setTotalExperience(0);
+                StaffExp.put(player.getName(), player.getExp());
+                StaffLevel.put(player.getName(), player.getLevel());
+                player.setExp(0);
+                player.setLevel(0);
                 player.getInventory().clear();
                 player.updateInventory();
                 getLogger().info(player.getName() + " entered mod mode");
@@ -188,8 +197,10 @@ public class Main extends JavaPlugin {
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
-                    player.setTotalExperience(StaffExp.get(player.getName()));
+                    player.setExp(StaffExp.get(player.getName()));
+                    player.setLevel(StaffLevel.get(player.getName()));
                     StaffExp.remove(player.getName());
+                    StaffLevel.remove(player.getName());
                 }
                 player.updateInventory();
                 return true;
@@ -201,8 +212,10 @@ public class Main extends JavaPlugin {
                 inAdmin.add(player.getName());
                 StaffLocations.put(player.getName(), player.getLocation());
                 StaffInventories.put(player.getName(), player.getInventory().getContents());
-                StaffExp.put(player.getName(), player.getTotalExperience());
-                player.setTotalExperience(0);
+                StaffExp.put(player.getName(), player.getExp());
+                StaffLevel.put(player.getName(), player.getLevel());
+                player.setExp(0);
+                player.setLevel(0);
                 player.getInventory().clear();
                 player.updateInventory();
                 getLogger().info(player.getName() + " entered admin mode");
