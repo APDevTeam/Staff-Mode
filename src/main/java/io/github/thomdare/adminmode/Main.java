@@ -78,7 +78,12 @@ public class Main extends JavaPlugin {
                 }
                 if (StaffInventories.containsKey(player.getName())) {
                     player.getInventory().clear();
-                    player.getInventory().addItem(StaffInventories.get(player.getName()));
+                    //player.getInventory().addItem(StaffInventories.get(player.getName()));
+                    for (int i = 0; i <StaffInventories.get(player.getName()).length;i++) {
+                        if(StaffInventories.get(player.getName())[i] == null)
+                            continue;
+                        player.getInventory().setItem(i,StaffInventories.get(player.getName())[i]);
+                    }
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
@@ -127,7 +132,12 @@ public class Main extends JavaPlugin {
                 }
                 if (StaffInventories.containsKey(player.getName())) {
                     player.getInventory().clear();
-                    player.getInventory().addItem(StaffInventories.get(player.getName()));
+                    //player.getInventory().addItem(StaffInventories.get(player.getName()));
+                    for (int i = 0; i <StaffInventories.get(player.getName()).length;i++) {
+                        if(StaffInventories.get(player.getName())[i] == null)
+                            continue;
+                        player.getInventory().setItem(i,StaffInventories.get(player.getName())[i]);
+                    }
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
