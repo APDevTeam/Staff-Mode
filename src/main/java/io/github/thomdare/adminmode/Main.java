@@ -90,7 +90,7 @@ public class Main extends JavaPlugin {
                     player.setTotalExperience(StaffExp.get(player.getName()));
                     StaffExp.remove(player.getName());
                 }
-
+                player.updateInventory();
                 return true;
             } else {
                 for (String command : modmodeenable) {
@@ -103,6 +103,7 @@ public class Main extends JavaPlugin {
                 StaffExp.put(player.getName(), player.getTotalExperience());
                 player.setTotalExperience(0);
                 player.getInventory().clear();
+                player.updateInventory();
                 getLogger().info(player.getName() + " entered mod mode");
                 sender.sendMessage("Entering mod mode");
                 return true;
@@ -144,6 +145,7 @@ public class Main extends JavaPlugin {
                     player.setTotalExperience(StaffExp.get(player.getName()));
                     StaffExp.remove(player.getName());
                 }
+                player.updateInventory();
                 return true;
             } else {
                 for (String command : adminmodeenable) {
@@ -156,6 +158,7 @@ public class Main extends JavaPlugin {
                 StaffExp.put(player.getName(), player.getTotalExperience());
                 player.setTotalExperience(0);
                 player.getInventory().clear();
+                player.updateInventory();
                 getLogger().info(player.getName() + " entered admin mode");
                 sender.sendMessage("Entering admin mode");
                 return true;
