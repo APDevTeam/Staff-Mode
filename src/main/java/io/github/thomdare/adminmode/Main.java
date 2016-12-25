@@ -40,13 +40,59 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        adminmodeenable.clear();
-        adminmodedisable.clear();
-        modmodeenable.clear();
-        modmodedisable.clear();
+        for(String name : inMod){
+            Player player = Bukkit.getPlayer(name);
+            for (String command : modmodedisable) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", name));
+            }
+            if (StaffLocations.containsKey(name)) {
+                player.teleport(StaffLocations.get(name));
+                StaffLocations.remove(name);
+            }
+            if (StaffInventories.containsKey(name)) {
+                player.getInventory().clear();
+                //player.getInventory().addItem(StaffInventories.get(player.getName()));
+                for (int i = 0; i <StaffInventories.get(name).length;i++) {
+                    if(StaffInventories.get(name)[i] == null)
+                        continue;
+                    player.getInventory().setItem(i,StaffInventories.get(name)[i]);
+                }
+                StaffInventories.remove(name);
+            }
+            if (StaffExp.containsKey(name)) {
+                player.setTotalExperience(StaffExp.get(name));
+                StaffExp.remove(name);
+            }
+            player.updateInventory();
+        }
+        for(String name: inAdmin){
+            Player player = Bukkit.getPlayer(name);
+            for (String command : adminmodedisable) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p",name));
+
+            }
+            if (StaffLocations.containsKey(name)) {
+                player.teleport(StaffLocations.get(name));
+                StaffLocations.remove(name);
+            }
+            if (StaffInventories.containsKey(name)) {
+                player.getInventory().clear();
+                //player.getInventory().addItem(StaffInventories.get(name));
+                for (int i = 0; i <StaffInventories.get(name).length;i++) {
+                    if(StaffInventories.get(name)[i] == null)
+                        continue;
+                    player.getInventory().setItem(i,StaffInventories.get(name)[i]);
+                }
+                StaffInventories.remove(name);
+            }
+            if (StaffExp.containsKey(name)) {
+                player.setTotalExperience(StaffExp.get(name));
+                StaffExp.remove(name);
+            }
+            player.updateInventory();   
+        }
         inMod.clear();
         inAdmin.clear();
-        StaffLocations.clear();
     }
 
     @Override
