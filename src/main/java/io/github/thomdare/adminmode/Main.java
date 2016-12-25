@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -20,7 +21,7 @@ public class Main extends JavaPlugin {
     private List<String> inMod = new ArrayList<String>();
     private List<String> inAdmin = new ArrayList<String>();
     private HashMap<String, Location> StaffLocations = new HashMap<String, Location>();
-    private HashMap<String, PlayerInventory> StaffInventories = new HashMap<String, PlayerInventory>();
+    private HashMap<String, ItemStack[]> StaffInventories = new HashMap<String, ItemStack[]>();
     private HashMap<String, Integer> StaffExp = new HashMap<String, Integer>();
 
     public void onEnable() {
@@ -77,9 +78,7 @@ public class Main extends JavaPlugin {
                 }
                 if (StaffInventories.containsKey(player.getName())) {
                     player.getInventory().clear();
-                    player.getInventory().addItem(StaffInventories.get(player.getName()).getContents());
-                    player.getInventory().setExtraContents(StaffInventories.get(player.getName()).getExtraContents());
-                    player.getInventory().setArmorContents(StaffInventories.get(player.getName()).getArmorContents());
+                    player.getInventory().addItem(StaffInventories.get(player.getName()));
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
@@ -95,9 +94,12 @@ public class Main extends JavaPlugin {
                 }
                 inMod.add(player.getName());
                 StaffLocations.put(player.getName(), player.getLocation());
-                StaffInventories.put(player.getName(), player.getInventory());
+                StaffInventories.put(player.getName(), player.getInventory().getContents());
                 StaffExp.put(player.getName(), player.getTotalExperience());
+                player.setTotalExperience(0);
+                player.getInventory().clear();
                 getLogger().info(player.getName() + " entered mod mode");
+                sender.sendMessage("Entering mod mode");
                 return true;
             }
 
@@ -125,9 +127,7 @@ public class Main extends JavaPlugin {
                 }
                 if (StaffInventories.containsKey(player.getName())) {
                     player.getInventory().clear();
-                    player.getInventory().addItem(StaffInventories.get(player.getName()).getContents());
-                    player.getInventory().setExtraContents(StaffInventories.get(player.getName()).getExtraContents());
-                    player.getInventory().setArmorContents(StaffInventories.get(player.getName()).getArmorContents());
+                    player.getInventory().addItem(StaffInventories.get(player.getName()));
                     StaffInventories.remove(player.getName());
                 }
                 if (StaffExp.containsKey(player.getName())) {
@@ -142,9 +142,12 @@ public class Main extends JavaPlugin {
                 }
                 inAdmin.add(player.getName());
                 StaffLocations.put(player.getName(), player.getLocation());
-                StaffInventories.put(player.getName(), player.getInventory());
+                StaffInventories.put(player.getName(), player.getInventory().getContents());
                 StaffExp.put(player.getName(), player.getTotalExperience());
+                player.setTotalExperience(0);
+                player.getInventory().clear();
                 getLogger().info(player.getName() + " entered admin mode");
+                sender.sendMessage("Entering admin mode");
                 return true;
             }
 
