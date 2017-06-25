@@ -26,8 +26,8 @@ public final class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        for(Mode mode : modes){
-            for(UUID id : mode.getPlayers()){
+        for (Mode mode : modes) {
+            for (UUID id : mode.getPlayers()) {
                 mode.disableMode(Bukkit.getPlayer(id));
             }
         }
@@ -52,7 +52,7 @@ public final class Main extends JavaPlugin {
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
-        for(Mode mode : modes) {
+        for (Mode mode : modes) {
             try {
                 final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
