@@ -93,7 +93,7 @@ public final class Main extends JavaPlugin {
 
     private Mode getMode(String name) {
         for (Mode mode : modes) {
-            if (mode.getName().equals(name))
+            if (mode.getName().equalsIgnoreCase(name))
                 return mode;
         }
         return null;
@@ -127,9 +127,11 @@ public final class Main extends JavaPlugin {
                 return true;
             }
 
-            if (playerMode != null) {
+            if (playerMode == null) {
+                getMode(getName()).enableMode(player);
                 return true;
             }
+            playerMode.disableMode(player);
             return true;
         }
 
