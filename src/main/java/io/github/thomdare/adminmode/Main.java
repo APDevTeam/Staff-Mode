@@ -4,10 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -97,7 +99,7 @@ public final class Main extends JavaPlugin {
         return null;
     }
 
-    private class ModeCommand extends BukkitCommand {
+    private class ModeCommand extends BukkitCommand implements PluginIdentifiableCommand {
 
         private ModeCommand(String name) {
             super(name);
@@ -131,6 +133,10 @@ public final class Main extends JavaPlugin {
             return true;
         }
 
+        @Override
+        public Plugin getPlugin() {
+            return Main.this;
+        }
     }
 
 }
