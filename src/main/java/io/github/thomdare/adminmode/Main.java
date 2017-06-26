@@ -109,6 +109,11 @@ public final class Main extends JavaPlugin {
 
         @Override
         public boolean execute(CommandSender sender, String s, String[] strings) {
+            if(!(sender instanceof Player)){
+                sender.sendMessage(ChatColor.RED + "You need to be a player to use that command.");
+                return true;
+            }
+
             if (!sender.hasPermission(this.getPermission())) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission.");
                 return true;
