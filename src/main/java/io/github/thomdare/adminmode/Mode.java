@@ -2,7 +2,6 @@ package io.github.thomdare.adminmode;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +21,7 @@ public class Mode {
     private Map<UUID, StaffData> inMode = new HashMap<>();
     private String name;
 
-    public Mode(FileConfiguration config, File file) throws IOException {
+    public Mode(YamlConfiguration config, File file) throws IOException {
         config.addDefault("enableCommands", enableCommands);
         config.addDefault("disableCommands", disableCommands);
         config.options().copyDefaults(true);
@@ -57,18 +56,15 @@ public class Mode {
         for (String command : disableCommands) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("@p", player.getName()));
         }
-        inMode.remove(player.getUniqueId());
         StaffData playerData = inMode.get(player.getUniqueId());
+        inMode.remove(player.getUniqueId());
         player.teleport(playerData.getLoc());
-
         player.getInventory().clear();
-        //player.getInventory().addItem(StaffInventories.get(player.getName()));
         for (int i = 0; i < playerData.getInv().length; i++) {
             if (playerData.getInv()[i] == null)
                 continue;
             player.getInventory().setItem(i, playerData.getInv()[i]);
         }
-
         player.setExp(playerData.getXp());
         player.setLevel(playerData.getXpLevel());
         player.updateInventory();

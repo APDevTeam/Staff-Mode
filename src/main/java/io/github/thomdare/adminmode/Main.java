@@ -6,7 +6,6 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -128,7 +127,9 @@ public final class Main extends JavaPlugin {
             }
 
             if (playerMode == null) {
-                getMode(getName()).enableMode(player);
+                playerMode = getMode(getName());
+                assert player!=null;
+                playerMode.enableMode(player);
                 return true;
             }
             playerMode.disableMode(player);
