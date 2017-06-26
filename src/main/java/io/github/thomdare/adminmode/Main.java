@@ -38,7 +38,12 @@ public final class Main extends JavaPlugin {
         if (getDataFolder().listFiles() == null || getDataFolder().listFiles().length == 0) {
             File exampleFile = new File(getDataFolder(), "exampleMode.yml");
             exampleFile.getParentFile().mkdirs();
-            saveResource("exampleMode.yml", false);
+            try {
+                exampleFile.createNewFile();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+            //saveResource("exampleMode.yml", false);
         }
         assert getDataFolder().listFiles() != null;
 
@@ -52,6 +57,7 @@ public final class Main extends JavaPlugin {
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
+
         for (Mode mode : modes) {
             try {
                 final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
