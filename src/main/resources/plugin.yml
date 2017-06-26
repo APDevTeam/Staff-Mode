@@ -1,4 +1,4 @@
 name: StaffMode
 main: io.github.thomdare.adminmode.Main
 version: ${project.version}
-authors: Thomdare, cccm5
+authors: [Thomdare, cccm5]
