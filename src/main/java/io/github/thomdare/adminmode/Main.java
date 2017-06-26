@@ -65,17 +65,17 @@ public final class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
-        for (Mode mode : modes) {
-            try {
-                final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
-                bukkitCommandMap.setAccessible(true);
-                CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+        try {
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
+            bukkitCommandMap.setAccessible(true);
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+            for (Mode mode : modes)
                 commandMap.register(mode.getName(), new ModeCommand(mode.getName()));
-            } catch (IllegalAccessException | SecurityException | NoSuchFieldException | IllegalArgumentException e) {
-                e.printStackTrace();
-            }
+        } catch (IllegalAccessException | SecurityException | NoSuchFieldException | IllegalArgumentException e) {
+            e.printStackTrace();
+
         }
     }
 
