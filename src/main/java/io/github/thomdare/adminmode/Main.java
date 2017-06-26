@@ -38,23 +38,28 @@ public final class Main extends JavaPlugin {
         if (getDataFolder().listFiles() == null || getDataFolder().listFiles().length == 0) {
             File exampleFile = new File(getDataFolder(), "exampleMode.yml");
             exampleFile.getParentFile().mkdirs();
-            try {
+            /*try {
                 exampleFile.createNewFile();
             }catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
             //saveResource("exampleMode.yml", false);
         }
         assert getDataFolder().listFiles() != null;
 
         List<File> fileConfigs = Arrays.asList(getDataFolder().listFiles());
         List<YamlConfiguration> fileYaml = new ArrayList<>(fileConfigs.size());
+        getLogger().info("Loading " + fileConfigs.size() + " mode(s)");
         try {
-            for (int i = 0; i < fileYaml.size(); i++) {
-                fileYaml.get(i).load(fileConfigs.get(i));
-                modes.add(new Mode(fileYaml.get(i), fileConfigs.get(i)));
+            for(File file : getDataFolder().listFiles()){
+                modes.add(new Mode(YamlConfiguration.loadConfiguration(file),file));
             }
-        } catch (IOException | InvalidConfigurationException e) {
+
+            if(fileConfigs.size()==0){
+                File exampleFile= new File(getDataFolder(), "exampleMode.yml");
+                modes.add(new Mode(YamlConfiguration.loadConfiguration(exampleFile),exampleFile));
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

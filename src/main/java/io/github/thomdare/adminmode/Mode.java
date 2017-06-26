@@ -3,11 +3,13 @@ package io.github.thomdare.adminmode;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +17,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Mode {
-    private List<String> enableCommands;
-    private List<String> disableCommands;
+    private List<String> enableCommands = new ArrayList<>();
+    private List<String> disableCommands = new ArrayList<>();
     private Map<UUID, StaffData> inMode = new HashMap<>();
     private String name;
 
@@ -27,7 +29,7 @@ public class Mode {
         config.save(file);
         enableCommands = config.getStringList("enableCommands");
         disableCommands = config.getStringList("disableCommands");
-        name = config.getName();
+        name = file.getName().substring(0,file.getName().length()-4);
         Bukkit.getLogger().info("Loading mode: " + name);
 
 
