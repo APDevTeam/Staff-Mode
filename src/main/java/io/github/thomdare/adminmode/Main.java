@@ -2,10 +2,10 @@ package io.github.thomdare.adminmode;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -98,7 +98,7 @@ public final class Main extends JavaPlugin {
         return null;
     }
 
-    private class ModeCommand extends BukkitCommand implements PluginIdentifiableCommand {
+    private class ModeCommand extends Command implements PluginIdentifiableCommand {
 
         private ModeCommand(String name) {
             super(name);
