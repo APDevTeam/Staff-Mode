@@ -71,7 +71,7 @@ public final class Main extends JavaPlugin {
             bukkitCommandMap.setAccessible(true);
             CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
             for (Mode mode : modes)
-                commandMap.register(mode.getName(), new ModeCommand(mode.getName()));
+                commandMap.register("staffmode", new ModeCommand(mode.getName()));
         } catch (IllegalAccessException | SecurityException | NoSuchFieldException | IllegalArgumentException e) {
             e.printStackTrace();
 
