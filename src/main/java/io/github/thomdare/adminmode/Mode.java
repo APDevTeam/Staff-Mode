@@ -48,8 +48,7 @@ public class Mode {
         player.setLevel(0);
         player.getInventory().clear();
         player.updateInventory();
-        Bukkit.getLogger().info(player.getName() + " entered mod mode");
-        player.sendMessage("Entering mod mode");
+        Bukkit.getLogger().info(player.getName() + " entered " +name+" mode");
     }
 
     public void disableMode(Player player) {
@@ -68,6 +67,7 @@ public class Mode {
         player.setExp(playerData.getXp());
         player.setLevel(playerData.getXpLevel());
         player.updateInventory();
+        Bukkit.getLogger().info(player.getName() + " disabled " +name+" mode");
     }
 
     public String getName() {
