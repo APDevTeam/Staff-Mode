@@ -21,13 +21,10 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - run: ls && ls Staff-Mode && ls Staff-Mode/target || ls target
     - name: Stage jar
-      run: mkdir staging && cp target/Staff-Mode*.jar staging
-    - name: Rename jar
-      run: mv staging/Staff-Mode*.jar staging/Staff-Mode_$GITHUB_SHA.jar
+      run: mkdir staging && cp target/StaffMode*.jar staging && mv staging/Staff-Mode*.jar staging/StaffMode_$GITHUB_SHA.jar
     - name: Upload jar
       uses: actions/upload-artifact@v2
       with:
         name: Staff-Mode_Dev-Build
-        path: staging/Staff-Mode_*.jar
+        path: staging/StaffMode_*.jar
