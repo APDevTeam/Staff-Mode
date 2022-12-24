@@ -2,3 +2,4 @@ name: StaffMode
 main: io.github.thomdare.adminmode.Main
 version: ${project.version}
 authors: [Thomdare, cccm5]
+api-version: 1.14
