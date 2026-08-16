@@ -1,4 +1,4 @@
-package io.github.thomdare.adminmode;
+package io.github.apdevteam.staffmode;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
