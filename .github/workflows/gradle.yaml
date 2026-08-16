@@ -15,7 +15,7 @@ jobs:
       packages: write
 
     steps:
-    - name: Checkout StaffMode
+    - name: Checkout Staff-Mode
       uses: actions/checkout@v7
       with:
         fetch-depth: 0
@@ -45,21 +45,21 @@ jobs:
 
     - name: Stage jar for Actions
       if: ${{ github.event_name != 'release' }}
-      run: mkdir staging && cp build/libs/StaffMode.jar staging && mv staging/StaffMode.jar staging/StaffMode_$GITHUB_SHA.jar
+      run: mkdir staging && cp build/libs/Staff-Mode.jar staging && mv staging/Staff-Mode.jar staging/Staff-Mode_$GITHUB_SHA.jar
     - name: Upload jar to Actions
       if: ${{ github.event_name != 'release' }}
       uses: actions/upload-artifact@v7
       with:
-        name: StaffMode_Dev-Build
-        path: staging/StaffMode_*.jar
+        name: Staff-Mode_Dev-Build
+        path: staging/Staff-Mode_*.jar
 
     - name: Stage jar for Release
       if: ${{ github.event_name == 'release' }}
-      run: mkdir staging && cp build/libs/StaffMode.jar staging && mv staging/StaffMode.jar staging/StaffMode_${{ github.event.release.tag_name }}.jar
+      run: mkdir staging && cp build/libs/Staff-Mode.jar staging && mv staging/Staff-Mode.jar staging/Staff-Mode_${{ github.event.release.tag_name }}.jar
     - name: Upload jar to Release
       if: ${{ github.event_name == 'release' }}
       uses: softprops/action-gh-release@v3
       with:
-        files: staging/StaffMode_${{ github.event.release.tag_name }}.jar
+        files: staging/Staff-Mode_${{ github.event.release.tag_name }}.jar
         tag_name: ${{ github.event.release.tag_name }}
         token: ${{ secrets.GITHUB_TOKEN }}

@@ -33,7 +33,7 @@ description = "Staff-Mode"
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 tasks.jar {
-    archiveBaseName.set("StaffMode")
+    archiveBaseName.set("Staff-Mode")
     archiveClassifier.set("")
     archiveVersion.set("")
 }
@@ -49,7 +49,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "io.github.apdevteam"
-            artifactId = "staffmode"
+            artifactId = "staff-mode"
             version = "${project.version}"
 
             artifact(tasks.jar)
@@ -58,7 +58,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/apdevteam/staffmode")
+            url = uri("https://maven.pkg.github.com/apdevteam/staff-mode")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")

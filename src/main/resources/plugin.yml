@@ -1,4 +1,4 @@
-name: StaffMode
+name: Staff-Mode
 main: io.github.apdevteam.staffmode.Main
 version: ${projectVersion}
 authors: [Thomdare, cccm5, TylerS1066]
