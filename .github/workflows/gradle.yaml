@@ -1,0 +1,65 @@
+name: Gradle CI
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  release:
+    types: [created, prereleased]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - name: Checkout StaffMode
+      uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+    - name: Set up JDK 21
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v6
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
+        build-scan-terms-of-use-agree: "yes"
+
+    - name: Build with Gradle
+      run: ./gradlew clean build --parallel
+      env:
+        RELEASE_VERSION: ${{ github.event.release.tag_name }}
+
+    - name: Publish to GitHub Packages
+      if: ${{ github.event_name == 'release' }}
+      run: ./gradlew publish --parallel
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_VERSION: ${{ github.event.release.tag_name }}
+
+    - name: Stage jar for Actions
+      if: ${{ github.event_name != 'release' }}
+      run: mkdir staging && cp build/libs/StaffMode.jar staging && mv staging/StaffMode.jar staging/StaffMode_$GITHUB_SHA.jar
+    - name: Upload jar to Actions
+      if: ${{ github.event_name != 'release' }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: StaffMode_Dev-Build
+        path: staging/StaffMode_*.jar
+
+    - name: Stage jar for Release
+      if: ${{ github.event_name == 'release' }}
+      run: mkdir staging && cp build/libs/StaffMode.jar staging && mv staging/StaffMode.jar staging/StaffMode_${{ github.event.release.tag_name }}.jar
+    - name: Upload jar to Release
+      if: ${{ github.event_name == 'release' }}
+      uses: softprops/action-gh-release@v3
+      with:
+        files: staging/StaffMode_${{ github.event.release.tag_name }}.jar
+        tag_name: ${{ github.event.release.tag_name }}
+        token: ${{ secrets.GITHUB_TOKEN }}

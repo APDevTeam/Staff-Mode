@@ -1,5 +1,5 @@
 name: StaffMode
-main: io.github.thomdare.adminmode.Main
-version: ${project.version}
-authors: [Thomdare, cccm5]
-api-version: 1.14
+main: io.github.apdevteam.staffmode.Main
+version: ${projectVersion}
+authors: [Thomdare, cccm5, TylerS1066]
+api-version: 1.20
